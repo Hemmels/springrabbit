@@ -1,0 +1,17 @@
+rabbitmq:
+  image: rabbitmq:management
+  ports:
+    - "5672:5672"
+    - "15672:15672"
+
+hems:
+  image: hemmels/rtapmessaging
+  command: java -jar rtapmessaging.jar
+  environment:
+    SPRING_RABBITMQ_HOST: rabbitmq
+    SPRING_APPLICATION_NAME: RTapMessages
+    SPRING_PROFILES_ACTIVE: dev
+  ports:
+    - "8080:8080"
+  links:
+    - rabbitmq
